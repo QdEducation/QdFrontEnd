@@ -1,5 +1,5 @@
 import {inject, injectable, tagged} from 'inversify';
-import {IApp, IClassroomCreator, IStudentViewCreator, IVueConfigurer} from "../interfaces";
+import {IApp, IClassroomCreator, IStudentViewCreator, ITeacherViewCreator, IVueConfigurer} from "../interfaces";
 import {TYPES} from "../types";
 import {ComponentOptions} from "vue";
 import Vue from 'vue'
@@ -14,28 +14,30 @@ const BOOTSTRAP_ELEMENT_SELECTOR = '#app'
 export class VueConfigurer implements IVueConfigurer {
     private classroomCreator: IClassroomCreator
     private studentViewCreator: IStudentViewCreator
+    private teacherViewCreator: ITeacherViewCreator
     constructor(@inject(TYPES.VueConfigurerArgs){
-        studentViewCreator, classroomCreator
+        studentViewCreator, classroomCreator,
+        teacherViewCreator,
     }: VueConfigurerArgs ) {
         this.classroomCreator = classroomCreator
         this.studentViewCreator = studentViewCreator
-
+        this.teacherViewCreator = teacherViewCreator
     }
     public configure() {
         Vue.use(VueRouter)
         console.log('vue configured')
         const Classroom = this.classroomCreator.create()
         const StudentView = this.studentViewCreator.create()
+        const TeacherView = this.teacherViewCreator.create()
 
         Vue.component('classroom', Classroom)
         const routes = [
             { path: '/', component: StudentView, props: true },
-            // { path: '/ebbinghaus', component: Ebbinghaus, props: true },
-            // { path: '/coordinates', component: Coordinates, props: true },
+            { path: '/teacherView', component: TeacherView, props: true },
         ]
 
         const router = new VueRouter({
-            routes, // short for `routes: routes`
+            routes,
             mode: 'history',
         })
 
@@ -63,4 +65,5 @@ export class VueConfigurer implements IVueConfigurer {
 export class VueConfigurerArgs {
     @inject(TYPES.IClassroomCreator) classroomCreator: IClassroomCreator
     @inject(TYPES.IStudentViewCreator) studentViewCreator: IStudentViewCreator
+    @inject(TYPES.ITeacherViewCreator) teacherViewCreator: ITeacherViewCreator
 }

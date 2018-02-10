@@ -1,5 +1,5 @@
 import {inject, injectable} from "inversify";
-import {IClassroomCreator} from "../../../interfaces";
+import {IClassroomCreator, IQuestion, ITopic} from "../../../interfaces";
 import {Store} from "vuex";
 import {TYPES} from "../../../types";
 const template = require('./classroom.html').default
@@ -17,31 +17,26 @@ export class ClassroomCreator implements IClassroomCreator {
         const component = {
             props: ['classroomId'],
             template,
-            // '<div>This is the template for tree.html</div>',
-            // require('./tree.html'), // '<div> {{movie}} this is the tree template</div>',
             async created() {
-                console.log('student view created')
+                console.log('teacher view created')
             },
             mounted() {
             },
             data() {
                 return {
-                    title: 'temp title',
-                    date: 'temp date',
-                    topicsData: [],
+                    date: 'sample date',
+                    title: 'sample title',
                 }
             },
             watch: {
             },
             computed: {
                 topics() {
-                    return me.store.getters
+                    const topics: ITopic[] = me.store.getters.topics(this.classroomId)
+                    console.log('topics in topics computed is ', topics)
+                    return topics
                 }
             },
-            methods: {
-                aMethod() {
-                },
-            }
         }
         return component
         // return {} as Component

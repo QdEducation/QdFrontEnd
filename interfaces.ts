@@ -11,6 +11,8 @@ export interface IStudentViewCreator extends IComponentCreator {
 }
 export interface IClassroomCreator extends IComponentCreator {
 }
+export interface ITeacherViewCreator extends IComponentCreator {
+}
 
 export interface ITopic {
     title: string,
@@ -31,6 +33,10 @@ export interface IClass {
 export interface IQuestion {
     student: id,
     topic: id,
+}
+export interface IFormattedQuestion {
+    studentName: string,
+    topic: string,
 }
 export type id = string
 export interface IHash<T> {

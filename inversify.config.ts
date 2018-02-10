@@ -1,6 +1,6 @@
 import {Container, ContainerModule, interfaces} from "inversify";
 import {App, AppArgs} from "./app/app";
-import {IApp, IClassroomCreator, IStudentViewCreator, IVueConfigurer} from "./interfaces";
+import {IApp, IClassroomCreator, IStudentViewCreator, ITeacherViewCreator, IVueConfigurer} from "./interfaces";
 import {TYPES} from "./types";
 import {VueConfigurer, VueConfigurerArgs} from "./app/vueConfigurer";
 import {ClassroomCreator, ClassroomCreatorArgs} from "./app/components/classroom/classroom";
@@ -9,6 +9,7 @@ import {Store} from "vuex";
 import Vuex from 'vuex'
 import Vue from 'vue'
 import {default as AppStore, AppStoreArgs} from "./app/appStore";
+import {TeacherViewCreator, TeacherViewCreatorArgs} from "./app/components/teacherView/teacherView";
 
 export const myContainer = new Container()
 // export const components =
@@ -28,6 +29,10 @@ export const components
         .to(StudentViewCreator)
     bind<StudentViewCreatorArgs>(TYPES.StudentViewCreatorArgs)
         .to(StudentViewCreatorArgs)
+    bind<ITeacherViewCreator>(TYPES.ITeacherViewCreator)
+        .to(TeacherViewCreator)
+    bind<TeacherViewCreatorArgs>(TYPES.TeacherViewCreatorArgs)
+        .to(TeacherViewCreatorArgs)
 })
 export const app
     = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {

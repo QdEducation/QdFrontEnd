@@ -2,7 +2,7 @@ import {Store} from 'vuex'
 import * as Vuex from 'vuex'
 import {inject, injectable} from "inversify";
 import {TYPES} from "../types";
-import {IState} from "../interfaces";
+import {IState, ITopic} from "../interfaces";
 const initialState: IState = require('./initialData.json')
 console.log("")
 
@@ -33,6 +33,20 @@ const state: IState = initialState // as IState
 //     }
 // }
 const getters = {
+    topics(state, getters) {
+       return (classroomId): ITopic[] => {
+           const topics: ITopic[] = []
+           // TODO: implement
+           return topics
+       }
+    },
+    questions(state, getters) {
+        return classroomId => {
+            const questions = []
+            // TODO: implement
+            return questions
+        }
+    }
 }
 const mutations = {
 }
