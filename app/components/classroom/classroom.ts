@@ -1,7 +1,8 @@
 import {inject, injectable} from "inversify";
-import {IClassroomCreator, IQuestion, ITopic} from "../../../interfaces";
+import {IClassroomCreator, id, IQuestion, ITopic, ToggleUserHasQuestionMutationArgs} from "../../../interfaces";
 import {Store} from "vuex";
 import {TYPES} from "../../../types";
+import {MUTATION_NAMES} from "../../appStore";
 const template = require('./classroom.html').default
 
 @injectable()
@@ -15,7 +16,7 @@ export class ClassroomCreator implements IClassroomCreator {
     public create() {
         const me = this
         const component = {
-            props: ['classroomId'],
+            props: ['classroomId', 'userId'],
             template,
             async created() {
                 console.log('teacher view created')
@@ -35,8 +36,22 @@ export class ClassroomCreator implements IClassroomCreator {
                     const topics: ITopic[] = me.store.getters.topics(this.classroomId)
                     console.log('topics in topics computed is ', topics)
                     return topics
+                },
+                userId() {
+                    const userId: id = me.store.getters.userId
+                    return userId
                 }
             },
+            methods: {
+                tapTopic(topicId) {
+                    const mutationArgs: ToggleUserHasQuestionMutationArgs = {
+                        topicId,
+                        userId: this.userId,
+                        classroomId: this.classroomId,
+                    }
+                    me.store.commit(MUTATION_NAMES.TOGGLE_USER_HAS_QUESTION, mutationArgs)
+                }
+            }
         }
         return component
         // return {} as Component

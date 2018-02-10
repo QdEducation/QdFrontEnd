@@ -43,8 +43,16 @@ export interface IHash<T> {
     [id: string]: T
 }
 export interface IState {
+    userId: id,
     classes: IHash<IClass>,
     students: IHash<IStudent>,
     teachers: IHash<ITeacher>,
     topics: IHash<ITopic>,
+}
+
+export interface ToggleUserHasQuestionMutationArgs {
+    classroomId, userId, topicId
+}
+export interface RemoveUserHasQuestionMutationArgs {
+    classroomId, questionIndex
 }
