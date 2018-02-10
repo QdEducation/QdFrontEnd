@@ -1,0 +1,41 @@
+{
+  "topics": {
+    "1":
+    {
+      "title": "Slope",
+      "tags": ["math", "algebra"]
+    },
+    "2":
+    {
+      "title": "Intercept",
+      "tags": ["math", "algebra"]
+    }
+  },
+  "students": {
+    "1": { "name": "Herman Singh" },
+    "2": { "name": "John Simerlink" },
+    "3": { "name": "John Doe" },
+    "4": { "name": "Jane Doe" }
+  },
+  "teachers": {
+    "1": { "name": "Mrs. Doubtfire" },
+    "2": { "name": "Dr. Dolittle" }
+  },
+  "classes": {
+    "1":
+    {
+      "teacher": 1,
+      "queue": [
+        {
+          "student": "1",
+          "topic": "1"
+        },
+        {
+          "student": "4",
+          "topic": "2"
+        }
+      ],
+      "topics": ["1", "2"]
+    }
+  }
+}

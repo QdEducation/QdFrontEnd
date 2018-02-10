@@ -26,6 +26,11 @@ var teachers =
   "2": { "name": "Dr. Dolittle" },
 }
 
+var exampleQueueItem = {
+  "student": "1",
+  "topic": "2",
+}
+
 var classes =
 {
   "1":

@@ -2,6 +2,9 @@ import {Store} from 'vuex'
 import * as Vuex from 'vuex'
 import {inject, injectable} from "inversify";
 import {TYPES} from "../types";
+import {IState} from "../interfaces";
+const initialState: IState = require('./initialData.json')
+console.log("")
 
 let Vue = require('vue').default // for webpack
 if (!Vue) {
@@ -14,9 +17,21 @@ if (!Vue) {
 export enum MUTATION_NAMES {
 }
 
-const state = {
-
-}
+const state: IState = initialState // as IState
+// {
+//     classes: {
+//
+//     },
+//     students: {
+//
+//     },
+//     teachers: {
+//
+//     },
+//     topics: {
+//
+//     }
+// }
 const getters = {
 }
 const mutations = {
