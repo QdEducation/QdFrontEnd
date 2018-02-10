@@ -1,0 +1,16 @@
+<div class="classroom">
+    <div>This is classroom. Id is {{classroomId}}</div>
+    <div class="classroom-header">
+        <div class="classroom-header-title">
+            {{title}}
+        </div>
+        <div class="classroom-header-date">
+            {{date}}
+        </div>
+    </div>
+    <div class="classroom-topics">
+        <div v-for="topicData in topicsData">
+            <topic :topicData="topicData"></topic>
+        </div>
+    </div>
+</div>

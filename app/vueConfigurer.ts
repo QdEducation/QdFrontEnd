@@ -1,5 +1,5 @@
 import {inject, injectable, tagged} from 'inversify';
-import {IApp, IVueConfigurer} from "../interfaces";
+import {IApp, IClassroomCreator, IStudentViewCreator, IVueConfigurer} from "../interfaces";
 import {TYPES} from "../types";
 import {ComponentOptions} from "vue";
 import Vue from 'vue'
@@ -12,21 +12,28 @@ const BOOTSTRAP_ELEMENT_SELECTOR = '#app'
 
 @injectable()
 export class VueConfigurer implements IVueConfigurer {
-    constructor(@inject(TYPES.VueConfigurerArgs){}: VueConfigurerArgs ) {
+    private classroomCreator: IClassroomCreator
+    private studentViewCreator: IStudentViewCreator
+    constructor(@inject(TYPES.VueConfigurerArgs){
+        studentViewCreator, classroomCreator
+    }: VueConfigurerArgs ) {
+        this.classroomCreator = classroomCreator
+        this.studentViewCreator = studentViewCreator
+
     }
     public configure() {
+        Vue.use(VueRouter)
         console.log('vue configured')
+        const Classroom = this.classroomCreator.create()
+        const StudentView = this.studentViewCreator.create()
 
-        Vue.use(VueRouter);
+        Vue.component('classroom', Classroom)
         const routes = [
-            // { path: '/', component: KnawledgeMap, props: true },
+            { path: '/', component: StudentView, props: true },
             // { path: '/ebbinghaus', component: Ebbinghaus, props: true },
             // { path: '/coordinates', component: Coordinates, props: true },
         ]
 
-// 3. Create the router instance and pass the `routes` option
-// You can pass in additional options here, but let's
-// keep it simple for now.
         const router = new VueRouter({
             routes, // short for `routes: routes`
             mode: 'history',
@@ -35,7 +42,7 @@ export class VueConfigurer implements IVueConfigurer {
         const vm = new Vue({
             el: BOOTSTRAP_ELEMENT_SELECTOR,
             created() {
-                // log('Vue instance created')
+                console.log('Vue instance created')
                 return void 0
             },
             data() {
@@ -54,9 +61,6 @@ export class VueConfigurer implements IVueConfigurer {
 
 @injectable()
 export class VueConfigurerArgs {
+    @inject(TYPES.IClassroomCreator) classroomCreator: IClassroomCreator
+    @inject(TYPES.IStudentViewCreator) studentViewCreator: IStudentViewCreator
 }
-
-
-
-
-
