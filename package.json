@@ -6,6 +6,7 @@
   "dependencies": {
     "awesome-typescript-loader": "^3.4.1",
     "compression-webpack-plugin": "^1.1.6",
+    "inversify": "^4.10.0",
     "typescript": "^2.7.1",
     "vue": "^2.5.13",
     "webpack": "^3.11.0",
@@ -18,7 +19,8 @@
     "lesshint-webpack-plugin": "0.0.4",
     "reflect-metadata": "^0.1.12",
     "tslint": "^5.9.1",
-    "tslint-loader": "^3.5.3"
+    "tslint-loader": "^3.5.3",
+    "vue-router": "^3.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
