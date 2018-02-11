@@ -1,6 +1,9 @@
 export interface IApp {
     start()
 }
+export interface IDataSubscriber {
+    start()
+}
 export interface IVueConfigurer {
     configure()
 }
@@ -45,7 +48,7 @@ export interface IFormattedQuestion {
     studentName: string,
     topic: string,
 }
-export type id = string
+export type id = string // CANNOT be 0 or "0" because of falsey checks
 export interface IHash<T> {
     [id: string]: T
 }

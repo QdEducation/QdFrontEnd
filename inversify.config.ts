@@ -1,6 +1,9 @@
 import {Container, ContainerModule, interfaces} from "inversify";
 import {App, AppArgs} from "./app/app";
-import {IApp, IClassroomCreator, IStudentViewCreator, ITeacherViewCreator, IVueConfigurer, ITopicCreator, IHeaderCreator} from "./interfaces";
+import {
+    IApp, IClassroomCreator, IStudentViewCreator, ITeacherViewCreator, IVueConfigurer, ITopicCreator,
+    IHeaderCreator, IDataSubscriber
+} from "./interfaces";
 import {TYPES} from "./types";
 import {VueConfigurer, VueConfigurerArgs} from "./app/vueConfigurer";
 import {ClassroomCreator, ClassroomCreatorArgs} from "./app/components/classroom/classroom";
@@ -12,7 +15,13 @@ import {default as AppStore, AppStoreArgs} from "./app/appStore";
 import {TeacherViewCreator, TeacherViewCreatorArgs} from "./app/components/teacherView/teacherView";
 import {TopicCreator, TopicCreatorArgs} from "./app/components/topic/topic";
 import {HeaderCreator, HeaderCreatorArgs} from "./app/components/header/header";
+import firebaseConfig = require('./app/firebaseConfig.json')
+import * as firebase from 'firebase'
+import Reference = firebase.database.Reference;
+import {TAGS} from "./app/tags";
+import {DataSubscriber, DataSubscriberArgs} from "./app/dataSubscriber";
 
+firebase.initializeApp(firebaseConfig)
 export const myContainer = new Container()
 // export const components =
 export const appStoreArgs
@@ -20,6 +29,14 @@ export const appStoreArgs
     bind<AppStoreArgs>(TYPES.AppStoreArgs).to(AppStoreArgs)
 
 })
+export const classroom1QuestionsRef = firebase.database().ref('classrooms/1')
+export const references
+    = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {
+    bind<Reference>(TYPES.FirebaseReference).toConstantValue(classroom1QuestionsRef)
+        .whenTargetTagged(TAGS.ClassRoom1QuestionsRef, true)
+
+    })
+
 
 export const components
     = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {
@@ -54,12 +71,17 @@ export const app
         .to(VueConfigurer)
     bind<VueConfigurerArgs>(TYPES.VueConfigurerArgs)
         .to(VueConfigurerArgs)
+    bind<IDataSubscriber>(TYPES.IDataSubscriber)
+        .to(DataSubscriber)
+    bind<DataSubscriberArgs>(TYPES.DataSubscriberArgs)
+        .to(DataSubscriberArgs)
     const store = new AppStore(appStoreArgs) as Store<any>
     bind<Store<any>>(TYPES.Store)
         .toConstantValue(store)
 })
 export function myContainerLoadAllModules() {
     myContainer.load(app)
+    myContainer.load(references)
     myContainer.load(components)
 }
 

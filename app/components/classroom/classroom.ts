@@ -48,7 +48,11 @@ export class ClassroomCreator implements IClassroomCreator {
                 }
             },
             methods: {
+                aMethod() {
+                    console.log('a method called')
+                },
                 tapTopic(topicId) {
+                    console.log('tap topic called')
                     const mutationArgs: ToggleUserHasQuestionMutationArgs = {
                         topicId,
                         userId: this.userId,

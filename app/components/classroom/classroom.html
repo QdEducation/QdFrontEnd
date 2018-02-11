@@ -1,8 +1,8 @@
 <div class="classroom">
     <app-header :title="title" :subtitle="date"></app-header>
-    <div class="classroom-topics">
-        <div>
-            <topic v-for="topic in topics" :topic-data="topic" v-on:click="tapTopic(topic.id)"></topic>
+    <div class="classroom-topics" v-on:click="aMethod()">
+        <div v-for="topic in topics" v-on:click="tapTopic(topic.id)">
+            <topic :topic-data="topic" ></topic>
         </div>
     </div>
 </div>

@@ -26,6 +26,7 @@ export enum MUTATION_NAMES {
     TOGGLE_USER_HAS_QUESTION = 'toggleUserHasQuestion',
     ADD_USER_HAS_QUESTION = 'addUserHasQuestion',
     REMOVE_USER_HAS_QUESTION = 'removeUserHasQuestion',
+    LOAD_CLASSROOM_1_QUEUE_DATA = 'loadClassroom1QueueData',
     // toggleUserHasQuestion = 'toggleUserHasQuestion' // ({classroomId, userId, topicId}){
 
     // }
@@ -92,6 +93,7 @@ const getters = {
 }
 const mutations = {
     [MUTATION_NAMES.TOGGLE_USER_HAS_QUESTION] (state: IState, {classroomId, userId, topicId} : ToggleUserHasQuestionMutationArgs) {
+        console.log('toggle User has question called', state, classroomId, userId, topicId)
         // const args: ToggleUserHasQuestionMutationArgs = {classroomId, userId, topicId}
         const question: IQuestion = {student: userId, topic: topicId}
         const questionIndex = getQuestionIndex({classes: state.classes,classroomId, question })
@@ -107,16 +109,20 @@ const mutations = {
             }
             mutations[MUTATION_NAMES.ADD_USER_HAS_QUESTION](state, args)
         }
-
-    }
+    },
+    [MUTATION_NAMES.LOAD_CLASSROOM_1_QUEUE_DATA] (state: IState, queue: IQuestion[]) {
+        const classroom = state.classes[1]
+        classroom.queue = queue
+    },
 }
 mutations[MUTATION_NAMES.REMOVE_USER_HAS_QUESTION] = function (state: IState, {classroomId, questionIndex} : RemoveUserHasQuestionMutationArgs) {
-        const classes: IHash<IClass> = state.classes
-        removeQuestion({classes, classroomId, questionIndex})
+    const classes: IHash<IClass> = state.classes
+    removeQuestion({classes, classroomId, questionIndex})
 }
 mutations[MUTATION_NAMES.ADD_USER_HAS_QUESTION] = function (state: IState, {classroomId, userId, topicId} : ToggleUserHasQuestionMutationArgs) {
     const classes: IHash<IClass> = state.classes
     addQuestion({classes, classroomId, question: {student: userId, topic: topicId}})
+
 }
 
 const actions = {}
