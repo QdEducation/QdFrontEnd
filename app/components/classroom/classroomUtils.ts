@@ -24,6 +24,9 @@ export function removeQuestion({classes, classroomId, questionIndex}: {classes: 
     const klass = classes[classroomId]
     const questions: IQuestion[] = klass.queue
     questions.splice(questionIndex, 1)
+    console.log('removeQuestions questions about to be. . . questions are currently ', questions)
+    classroom1QuestionsRef.update(questions)
+    console.log('removeQuestions questions just pushed. . . questions are now ', questions)
 }
 export function addQuestion({classes, classroomId, question}: {classes: IHash<IClass>, classroomId: id, question: IQuestion}) {
     const klass = classes[classroomId]

@@ -19,6 +19,7 @@ export class DataSubscriber implements IDataSubscriber {
     public start() {
         this.classroom1QuestionsRef.on('value', snapshot => {
             const questions: IQuestion[] = snapshot.val()
+            console.log('data received', questions)
             if (!questions) {
                 return
             }
