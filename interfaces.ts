@@ -13,10 +13,17 @@ export interface IClassroomCreator extends IComponentCreator {
 }
 export interface ITeacherViewCreator extends IComponentCreator {
 }
+export interface ITopicCreator extends IComponentCreator {
+}
+export interface IHeaderCreator extends IComponentCreator {
+}
 
 export interface ITopic {
     title: string,
     tags: string[]
+}
+export interface ITopicWithId extends ITopic {
+    id: id,
 }
 export interface IPerson {
     name: string

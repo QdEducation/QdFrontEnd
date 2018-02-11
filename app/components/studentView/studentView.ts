@@ -3,6 +3,7 @@ import {IStudentViewCreator} from "../../../interfaces";
 import {Store} from "vuex";
 import {TYPES} from "../../../types";
 const template = require('./studentView.html').default
+import './studentView.less'
 
 const DEFAULT_CLASSROOM_ID = '1'
 @injectable()

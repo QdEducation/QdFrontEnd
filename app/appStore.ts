@@ -6,7 +6,8 @@ import {
     IClass,
     IHash,
     IQuestion, IState, ITopic, RemoveUserHasQuestionMutationArgs,
-    ToggleUserHasQuestionMutationArgs
+    ToggleUserHasQuestionMutationArgs,
+    ITopicWithId,
 } from "../interfaces";
 import {addQuestion, getQuestionIndex, removeQuestion} from "./components/classroom/classroomUtils";
 import {Debugger} from "inspector";
@@ -47,10 +48,10 @@ const state: IState = initialState // as IState
 // }
 const getters = {
     topics(state: IState, getters) {
-       return (classroomId): ITopic[] => {
+       return (classroomId): ITopicWithId[] => {
            const klass = state.classes[classroomId]
            const topicIds = klass.topics
-           const topics: ITopic[] = topicIds.map( getters.topic)
+           const topics: ITopicWithId[] = topicIds.map( getters.topic)
            console.log("topics in getters are ", topics)
 
            // TODO: implement
@@ -58,9 +59,13 @@ const getters = {
        }
     },
     topic(state: IState, getters) {
-        return (topicId): ITopic => {
+        return (topicId): ITopicWithId => {
             const topic = state.topics[topicId]
-            return topic
+            const topicWithId = {
+                ...topic,
+                id: topicId
+            }
+            return topicWithId
         }
     },
     questions(state: IState, getters) {

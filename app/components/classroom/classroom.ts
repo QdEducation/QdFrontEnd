@@ -1,9 +1,13 @@
 import {inject, injectable} from "inversify";
-import {IClassroomCreator, id, IQuestion, ITopic, ToggleUserHasQuestionMutationArgs} from "../../../interfaces";
+import {
+    IClassroomCreator, id, IQuestion, ITopic, ITopicWithId,
+    ToggleUserHasQuestionMutationArgs
+} from "../../../interfaces";
 import {Store} from "vuex";
 import {TYPES} from "../../../types";
 import {MUTATION_NAMES} from "../../appStore";
 const template = require('./classroom.html').default
+import './classroom.less'
 
 @injectable()
 export class ClassroomCreator implements IClassroomCreator {
@@ -16,7 +20,7 @@ export class ClassroomCreator implements IClassroomCreator {
     public create() {
         const me = this
         const component = {
-            props: ['classroomId', 'userId'],
+            props: ['classroomId'],
             template,
             async created() {
                 console.log('teacher view created')
@@ -25,15 +29,15 @@ export class ClassroomCreator implements IClassroomCreator {
             },
             data() {
                 return {
-                    date: 'sample date',
-                    title: 'sample title',
+                    date: 'Wednesday 2/14',
+                    title: 'Mrs. Jane\'s Class',
                 }
             },
             watch: {
             },
             computed: {
                 topics() {
-                    const topics: ITopic[] = me.store.getters.topics(this.classroomId)
+                    const topics: ITopicWithId[] = me.store.getters.topics(this.classroomId)
                     console.log('topics in topics computed is ', topics)
                     return topics
                 },

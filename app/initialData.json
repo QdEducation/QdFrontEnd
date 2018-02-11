@@ -3,12 +3,32 @@
   "topics": {
     "1":
     {
-      "title": "Slope",
+      "title": "Calculating Slope from 2 Points",
       "tags": ["math", "algebra"]
     },
     "2":
     {
-      "title": "Intercept",
+      "title": "Calculating Y-Intercept",
+      "tags": ["math", "algebra"]
+    },
+    "3":
+    {
+      "title": "Calculating Y-Intercept",
+      "tags": ["math", "algebra"]
+    },
+    "4":
+    {
+      "title": "Plotting y = mx + b",
+      "tags": ["math", "algebra"]
+    },
+    "5":
+    {
+      "title": "Vertical Shifting",
+      "tags": ["math", "algebra"]
+    },
+    "6":
+    {
+      "title": "Horizontal Shifting",
       "tags": ["math", "algebra"]
     }
   },
@@ -36,7 +56,7 @@
           "topic": "2"
         }
       ],
-      "topics": ["1", "2"]
+      "topics": ["1", "2", "3", "4", "5", "6"]
     }
   }
 }

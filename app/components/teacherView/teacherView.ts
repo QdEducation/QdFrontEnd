@@ -3,6 +3,7 @@ import {IFormattedQuestion, IQuestion, ITeacherViewCreator} from "../../../inter
 import {Store} from "vuex";
 import {TYPES} from "../../../types";
 const template = require('./teacherView.html').default
+import './teacherView.less'
 
 const DEFAULT_CLASSROOM_ID = '1'
 @injectable()

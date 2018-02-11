@@ -1,6 +1,6 @@
 import {Container, ContainerModule, interfaces} from "inversify";
 import {App, AppArgs} from "./app/app";
-import {IApp, IClassroomCreator, IStudentViewCreator, ITeacherViewCreator, IVueConfigurer} from "./interfaces";
+import {IApp, IClassroomCreator, IStudentViewCreator, ITeacherViewCreator, IVueConfigurer, ITopicCreator, IHeaderCreator} from "./interfaces";
 import {TYPES} from "./types";
 import {VueConfigurer, VueConfigurerArgs} from "./app/vueConfigurer";
 import {ClassroomCreator, ClassroomCreatorArgs} from "./app/components/classroom/classroom";
@@ -10,6 +10,8 @@ import Vuex from 'vuex'
 import Vue from 'vue'
 import {default as AppStore, AppStoreArgs} from "./app/appStore";
 import {TeacherViewCreator, TeacherViewCreatorArgs} from "./app/components/teacherView/teacherView";
+import {TopicCreator, TopicCreatorArgs} from "./app/components/topic/topic";
+import {HeaderCreator, HeaderCreatorArgs} from "./app/components/header/header";
 
 export const myContainer = new Container()
 // export const components =
@@ -33,6 +35,14 @@ export const components
         .to(TeacherViewCreator)
     bind<TeacherViewCreatorArgs>(TYPES.TeacherViewCreatorArgs)
         .to(TeacherViewCreatorArgs)
+    bind<ITopicCreator>(TYPES.ITopicCreator)
+        .to(TopicCreator)
+    bind<TopicCreatorArgs>(TYPES.TopicCreatorArgs)
+        .to(TopicCreatorArgs)
+    bind<IHeaderCreator>(TYPES.IHeaderCreator)
+        .to(HeaderCreator)
+    bind<HeaderCreatorArgs>(TYPES.HeaderCreatorArgs)
+        .to(HeaderCreatorArgs)
 })
 export const app
     = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {

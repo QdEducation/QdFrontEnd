@@ -1,5 +1,6 @@
 import {inject, injectable, tagged} from 'inversify';
 import {IApp, IVueConfigurer} from "../interfaces";
+import './main.less'
 import {TYPES} from "../types";
 @injectable()
 export class App implements IApp {

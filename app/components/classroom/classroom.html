@@ -1,16 +1,8 @@
 <div class="classroom">
-    <div>This is classroom. Id is {{classroomId}}</div>
-    <div class="classroom-header">
-        <div class="classroom-header-title">
-            {{title}}
-        </div>
-        <div class="classroom-header-date">
-            {{date}}
-        </div>
-    </div>
+    <app-header :title="title" :subtitle="date"></app-header>
     <div class="classroom-topics">
-        <div v-for="topic in topics">
-            <topic :topicData="topicData"></topic>
+        <div>
+            <topic v-for="topic in topics" :topic-data="topic" v-on:click="tapTopic(topic.id)"></topic>
         </div>
     </div>
 </div>

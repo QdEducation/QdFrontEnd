@@ -1,5 +1,9 @@
 import {inject, injectable, tagged} from 'inversify';
-import {IApp, IClassroomCreator, IStudentViewCreator, ITeacherViewCreator, IVueConfigurer} from "../interfaces";
+import {
+    IApp, IClassroomCreator, IStudentViewCreator, ITeacherViewCreator, ITopicCreator,
+    IVueConfigurer,
+    IHeaderCreator,
+} from "../interfaces";
 import {TYPES} from "../types";
 import {ComponentOptions} from "vue";
 import Vue from 'vue'
@@ -15,13 +19,17 @@ export class VueConfigurer implements IVueConfigurer {
     private classroomCreator: IClassroomCreator
     private studentViewCreator: IStudentViewCreator
     private teacherViewCreator: ITeacherViewCreator
+    private topicCreator: ITopicCreator
+    private headerCreator: IHeaderCreator
     constructor(@inject(TYPES.VueConfigurerArgs){
         studentViewCreator, classroomCreator,
-        teacherViewCreator,
+        teacherViewCreator, topicCreator, headerCreator,
     }: VueConfigurerArgs ) {
         this.classroomCreator = classroomCreator
         this.studentViewCreator = studentViewCreator
         this.teacherViewCreator = teacherViewCreator
+        this.topicCreator = topicCreator
+        this.headerCreator = headerCreator
     }
     public configure() {
         Vue.use(VueRouter)
@@ -29,8 +37,12 @@ export class VueConfigurer implements IVueConfigurer {
         const Classroom = this.classroomCreator.create()
         const StudentView = this.studentViewCreator.create()
         const TeacherView = this.teacherViewCreator.create()
+        const Topic = this.topicCreator.create()
+        const Header = this.headerCreator.create()
 
         Vue.component('classroom', Classroom)
+        Vue.component('topic', Topic)
+        Vue.component('appHeader', Header)
         const routes = [
             { path: '/', component: StudentView, props: true },
             { path: '/teacherView', component: TeacherView, props: true },
@@ -63,7 +75,9 @@ export class VueConfigurer implements IVueConfigurer {
 
 @injectable()
 export class VueConfigurerArgs {
-    @inject(TYPES.IClassroomCreator) classroomCreator: IClassroomCreator
-    @inject(TYPES.IStudentViewCreator) studentViewCreator: IStudentViewCreator
-    @inject(TYPES.ITeacherViewCreator) teacherViewCreator: ITeacherViewCreator
+    @inject(TYPES.IClassroomCreator) public classroomCreator: IClassroomCreator
+    @inject(TYPES.IStudentViewCreator) public studentViewCreator: IStudentViewCreator
+    @inject(TYPES.ITeacherViewCreator) public teacherViewCreator: ITeacherViewCreator
+    @inject(TYPES.ITopicCreator) public topicCreator: ITopicCreator
+    @inject(TYPES.IHeaderCreator) public headerCreator: IHeaderCreator
 }
