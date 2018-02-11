@@ -7,7 +7,7 @@ import {
     IHash,
     IQuestion, IState, ITopic, RemoveUserHasQuestionMutationArgs,
     ToggleUserHasQuestionMutationArgs,
-    ITopicWithId,
+    ITopicWithId, id,
 } from "../interfaces";
 import {addQuestion, getQuestionIndex, removeQuestion} from "./components/classroom/classroomUtils";
 import {Debugger} from "inspector";
@@ -68,14 +68,25 @@ const getters = {
             return topicWithId
         }
     },
+    topicName(state: IState, getters) {
+        return (topicId): string => state.topics[topicId].title
+    },
     questions(state: IState, getters) {
-        return classroomId => {
-            const questions = []
-            // TODO: implement
+        return (classroomId: id): IQuestion[] => {
+            console.log('appStore questions getter called ', state)
+            const classroom = state.classes[classroomId]
+            if (!classroom) {
+                throw new RangeError('Could not find classroom with id of ' + classroomId + ' in classroom hashmap ' + classroom)
+            }
+            const {queue: questions} = classroom
+
             return questions
         }
     },
-    userId(state, getters) {
+    studentName(state: IState, getters) {
+        return (studentId: id): string => state.students[studentId].name
+    },
+    userId(state, getters): id {
         return state.userId
     }
 }

@@ -45,7 +45,7 @@ export class VueConfigurer implements IVueConfigurer {
         Vue.component('appHeader', Header)
         const routes = [
             { path: '/', component: StudentView, props: true },
-            { path: '/teacherView', component: TeacherView, props: true },
+            { path: '/teacherView/:classroomId', component: TeacherView, props: true },
         ]
 
         const router = new VueRouter({

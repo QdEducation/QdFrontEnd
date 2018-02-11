@@ -8,6 +8,7 @@ import {TYPES} from "../../../types";
 import {MUTATION_NAMES} from "../../appStore";
 const template = require('./classroom.html').default
 import './classroom.less'
+import {GLOBALS} from "../../globals";
 
 @injectable()
 export class ClassroomCreator implements IClassroomCreator {
@@ -29,8 +30,8 @@ export class ClassroomCreator implements IClassroomCreator {
             },
             data() {
                 return {
-                    date: 'Wednesday 2/14',
-                    title: 'Mrs. Jane\'s Class',
+                    date: GLOBALS.date,
+                    title: GLOBALS.className,
                 }
             },
             watch: {

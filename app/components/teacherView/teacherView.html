@@ -1,5 +1,5 @@
 <div class="teacher-view">
-    <div>This is the teacher view</div>
+    <app-header :title="title" :subtitle="date"></app-header>
     <div class="teacher-view-question" v-for="question in questions">
         {{question.studentName}}: {{question.topic}}
     </div>

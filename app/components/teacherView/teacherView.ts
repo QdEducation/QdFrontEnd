@@ -4,6 +4,7 @@ import {Store} from "vuex";
 import {TYPES} from "../../../types";
 const template = require('./teacherView.html').default
 import './teacherView.less'
+import {GLOBALS} from "../../globals";
 
 const DEFAULT_CLASSROOM_ID = '1'
 @injectable()
@@ -28,6 +29,8 @@ export class TeacherViewCreator implements ITeacherViewCreator {
             },
             data() {
                 return {
+                    date: GLOBALS.date,
+                    title: GLOBALS.className,
                 }
             },
             watch: {
@@ -36,7 +39,7 @@ export class TeacherViewCreator implements ITeacherViewCreator {
                 questions() {
                     const questionsUnformatted: IQuestion[] = me.store.getters.questions(this.classroomId)
                     console.log('questions Unformatted in questions computed is ', questionsUnformatted)
-                    const questionsFormatted = formatQuestions({store: me.store, questions: questionsUnformatted})
+                    const questionsFormatted: IFormattedQuestion[] = formatQuestions({store: me.store, questions: questionsUnformatted})
                     console.log('questions formatted in questions computed is ', questionsFormatted)
                     return questionsFormatted
                 }
@@ -47,7 +50,14 @@ export class TeacherViewCreator implements ITeacherViewCreator {
     }
 }
 function formatQuestions({store, questions}: {store: Store<any>, questions: IQuestion[]}): IFormattedQuestion[] {
-    return []
+    const formattedQuestions: IFormattedQuestion[] = questions.map(q => {
+        const formattedQuestion: IFormattedQuestion = {
+            studentName: store.getters.studentName(q.student),
+            topic: store.getters.topicName(q.topic)
+        }
+        return formattedQuestion
+    })
+    return formattedQuestions
 }
 @injectable()
 export class TeacherViewCreatorArgs {
