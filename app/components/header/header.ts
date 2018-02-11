@@ -8,6 +8,7 @@ import {TYPES} from "../../../types";
 import {MUTATION_NAMES} from "../../appStore";
 const template = require('./header.html').default
 import './header.less'
+import {GLOBALS} from "../../globals";
 
 @injectable()
 export class HeaderCreator implements IHeaderCreator {
@@ -18,10 +19,16 @@ export class HeaderCreator implements IHeaderCreator {
         this.store = store
     }
     public create() {
-        const me = this
         const component = {
             props: ['title', 'subtitle'],
             template,
+            methods: {
+                goToTeacherView() {
+                    console.log('goToTeacherView called')
+                    this.$router.push({name: GLOBALS.TEACHER_VIEW_PATH, params: {classroomId: '1'}})
+                    // this.$router.go()
+                }
+            }
         }
         return component
         // return {} as Component

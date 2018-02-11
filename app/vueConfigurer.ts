@@ -7,6 +7,7 @@ import {
 import {TYPES} from "../types";
 import {ComponentOptions} from "vue";
 import Vue from 'vue'
+import {GLOBALS} from "./globals";
 
 let VueRouter = require('vue-router').default;
 if (!VueRouter) {
@@ -45,12 +46,12 @@ export class VueConfigurer implements IVueConfigurer {
         Vue.component('appHeader', Header)
         const routes = [
             { path: '/', component: StudentView, props: true },
-            { path: '/teacherView/:classroomId', component: TeacherView, props: true },
+            { path: '/' + GLOBALS.TEACHER_VIEW_PATH + '/:classroomId', component: TeacherView, props: true },
         ]
 
         const router = new VueRouter({
             routes,
-            mode: 'history',
+            // mode: 'history',
         })
 
         const vm = new Vue({
