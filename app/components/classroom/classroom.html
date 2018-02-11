@@ -3,7 +3,7 @@
     <div class="classroom-topics-container">
         <div class="classroom-topics" v-on:click="aMethod()">
             <div class="classroom-topics-topic-container" v-for="topic in topics" v-on:click="tapTopic(topic.id)">
-                <topic class="classroom-topics-topic" :topic-data="topic" ></topic>
+                <topic :topic-data="topic" :topic-id="topic.id" ></topic>
             </div>
         </div>
     </div>

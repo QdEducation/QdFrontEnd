@@ -9,7 +9,7 @@ import {
     ToggleUserHasQuestionMutationArgs,
     ITopicWithId, id,
 } from "../interfaces";
-import {addQuestion, getQuestionIndex, removeQuestion} from "./components/classroom/classroomUtils";
+import {addQuestion, getQuestionIndex, hasQuestion, removeQuestion} from "./components/classroom/classroomUtils";
 import {Debugger} from "inspector";
 const initialState: IState = require('./initialData.json')
 console.log("")
@@ -83,6 +83,10 @@ const getters = {
 
             return questions
         }
+    },
+    hasQuestion(state: IState, getters) {
+        return (classroomId, question) => hasQuestion({classes: state.classes, classroomId, question})
+
     },
     studentName(state: IState, getters) {
         return (studentId: id): string => state.students[studentId].name

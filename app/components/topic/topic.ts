@@ -8,6 +8,7 @@ import {TYPES} from "../../../types";
 import {MUTATION_NAMES} from "../../appStore";
 const template = require('./topic.html').default
 import './topic.less'
+import {hasQuestion} from "../classroom/classroomUtils";
 
 const DEFAULT_CLASSROOM_ID = '1'
 @injectable()
@@ -29,7 +30,12 @@ export class TopicCreator implements ITopicCreator {
                     return this.topicData && this.topicData.title
                 },
                 active() {
-                    return Math.random() > .5
+                    var has = hasQuestion({classes: me.store.state.classes, classroomId: 1, question: {student: 1, topic: this.topicId}})
+                    console.log("has question is", has)
+                    return has
+                    // let userAskedThequestion: boolean =
+
+                    // return Math.random() > .5
                 }
             },
             methods: {
