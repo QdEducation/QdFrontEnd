@@ -46,14 +46,24 @@ const state: IState = initialState // as IState
 //     }
 // }
 const getters = {
-    topics(state, getters) {
+    topics(state: IState, getters) {
        return (classroomId): ITopic[] => {
-           const topics: ITopic[] = []
+           const klass = state.classes[classroomId]
+           const topicIds = klass.topics
+           const topics: ITopic[] = topicIds.map( getters.topic)
+           console.log("topics in getters are ", topics)
+
            // TODO: implement
            return topics
        }
     },
-    questions(state, getters) {
+    topic(state: IState, getters) {
+        return (topicId): ITopic => {
+            const topic = state.topics[topicId]
+            return topic
+        }
+    },
+    questions(state: IState, getters) {
         return classroomId => {
             const questions = []
             // TODO: implement
