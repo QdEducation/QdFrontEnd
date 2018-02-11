@@ -32,7 +32,8 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test ava-ts *.spec.ts app/*.spec.ts app/components/**/*.spec.ts --verbose --color",
     "dev": "cross-env set NODE_ENV=development && webpack-dev-server --inline --hot",
-    "test-watch": "cross-env NODE_ENV=test ava-ts *.spec.ts app/*.spec.ts app/components/**/*.spec.ts --verbose --color --watch"
+    "test-watch": "cross-env NODE_ENV=test ava-ts *.spec.ts app/*.spec.ts app/components/**/*.spec.ts --verbose --color --watch",
+    "server": "webpack-dev-server --inline --hot"
   },
   "repository": {
     "type": "git",
