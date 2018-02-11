@@ -2,15 +2,36 @@
 .classroom {
   height: 100%;
 }
-.classroom-topics {
-  padding-left: 5%;
-  padding-right: 5%;
-  width: 90%;
+.classroom-topics-container {
   height: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  flex-wrap: wrap;
+}
+.classroom-topics {
+  //padding-left: 5%;
+  //padding-right: 5%;
+  //width: 90%;
+  height: 100%;
+  //display: flex;
+  //justify-content: space-between;
+  //flex-direction: row;
+  //flex-wrap: wrap;
 
   background-color: @secondary-color;
+
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  //margin: -10px;
+
+}
+.classroom-topics-topic-container {
+    margin: 10px;
+    background-color: #000;
+    color: #FFF;
+    min-width: 150px;
+    flex: 1;
+    display: flex;
 }
