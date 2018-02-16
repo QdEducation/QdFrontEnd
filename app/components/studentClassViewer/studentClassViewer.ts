@@ -1,13 +1,13 @@
 import {inject, injectable} from "inversify";
 import {
     IClassroomCreator, id, IQuestion, ITopic, ITopicWithId,
-    ToggleUserHasQuestionMutationArgs
+    ToggleUserHasQuestionMutationArgs, ToggleUserNeedsHelpMutationArgs
 } from "../../../interfaces";
 import {Store} from "vuex";
 import {TYPES} from "../../../types";
 import {MUTATION_NAMES} from "../../appStore";
-const template = require('./classroom.html').default
-import './classroom.less'
+const template = require('./studentClassViewer.html').default
+import './studentClassViewer.less'
 import {GLOBALS} from "../../globals";
 
 @injectable()
@@ -55,6 +55,14 @@ export class ClassroomCreator implements IClassroomCreator {
                     console.log('tap topic called')
                     const mutationArgs: ToggleUserHasQuestionMutationArgs = {
                         topicId,
+                        userId: this.userId,
+                        classroomId: this.classroomId,
+                    }
+                    me.store.commit(MUTATION_NAMES.TOGGLE_USER_HAS_QUESTION, mutationArgs)
+                },
+                iNeedHelp() {
+                    console.log('tap topic called')
+                    const mutationArgs: ToggleUserNeedsHelpMutationArgs = {
                         userId: this.userId,
                         classroomId: this.classroomId,
                     }

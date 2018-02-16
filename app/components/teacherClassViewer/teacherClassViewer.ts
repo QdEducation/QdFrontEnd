@@ -2,8 +2,8 @@ import {inject, injectable} from "inversify";
 import {IFormattedQuestion, IQuestion, ITeacherViewCreator} from "../../../interfaces";
 import {Store} from "vuex";
 import {TYPES} from "../../../types";
-const template = require('./teacherView.html').default
-import './teacherView.less'
+const template = require('./teacherClassViewer.html').default
+import './teacherClassViewer.less'
 import {GLOBALS} from "../../globals";
 
 const DEFAULT_CLASSROOM_ID = '1'
@@ -26,6 +26,7 @@ export class TeacherViewCreator implements ITeacherViewCreator {
             },
             mounted() {
                 console.log('teacher view mounted')
+                // this.$store.commit()
             },
             data() {
                 return {

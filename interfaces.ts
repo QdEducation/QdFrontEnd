@@ -34,11 +34,16 @@ export interface IPerson {
 export interface IStudent extends IPerson {
 }
 export interface ITeacher extends IPerson {
+    classes: IHash<boolean> // hashmap of class ids that belong to the teacher
 }
 export interface IClass {
+    name: string,
     teacher: id,
-    queue: IQuestion[],
+    queue: IHash<id> // hash map of user ids //<IPerson[],
     topics: id[],
+}
+export interface IClassWithId extends IClass {
+    id: id
 }
 export interface IQuestion {
     student: id,
@@ -58,11 +63,23 @@ export interface IState {
     students: IHash<IStudent>,
     teachers: IHash<ITeacher>,
     topics: IHash<ITopic>,
+    teacherLoader: ITeacherLoader
 }
 
 export interface ToggleUserHasQuestionMutationArgs {
     classroomId, userId, topicId
 }
+export interface ToggleUserNeedsHelpMutationArgs {
+    classroomId, userId //, topicId
+}
 export interface RemoveUserHasQuestionMutationArgs {
     classroomId, questionIndex
+}
+export interface ILoadRoomsForTeachersMutationArgs {
+    teacherId,
+}
+
+// loaders
+export interface ITeacherLoader {
+    downloadData(teacherId): Promise<ITeacher>
 }

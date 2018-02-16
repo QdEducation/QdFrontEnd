@@ -1,3 +1,4 @@
 export enum TAGS {
-    ClassRoom1QuestionsRef = 'classroom1QuestionsRef'
+    ClassRoom1QuestionsRef = 'classroom1QuestionsRef',
+    USERS_REF = 'users'
 }

@@ -8,6 +8,10 @@ import {TYPES} from "../types";
 import {ComponentOptions} from "vue";
 import Vue from 'vue'
 import {GLOBALS} from "./globals";
+import {Store} from "vuex";
+import Login from './components/login/login'
+import Main from './components/main/main'
+import RoomCreator from './components/roomCreator/roomCreator'
 
 let VueRouter = require('vue-router').default;
 if (!VueRouter) {
@@ -22,15 +26,18 @@ export class VueConfigurer implements IVueConfigurer {
     private teacherViewCreator: ITeacherViewCreator
     private topicCreator: ITopicCreator
     private headerCreator: IHeaderCreator
+    private store: Store<any>
     constructor(@inject(TYPES.VueConfigurerArgs){
         studentViewCreator, classroomCreator,
         teacherViewCreator, topicCreator, headerCreator,
+        store,
     }: VueConfigurerArgs ) {
         this.classroomCreator = classroomCreator
         this.studentViewCreator = studentViewCreator
         this.teacherViewCreator = teacherViewCreator
         this.topicCreator = topicCreator
         this.headerCreator = headerCreator
+        this.store = store
     }
     public configure() {
         Vue.use(VueRouter)
@@ -44,9 +51,14 @@ export class VueConfigurer implements IVueConfigurer {
         Vue.component('classroom', Classroom)
         Vue.component('topic', Topic)
         Vue.component('appHeader', Header)
+        Vue.component('studentView', StudentView)
+        Vue.component('login', Login)
+        // Vue.component('main', Login)
         const routes = [
-            { path: '/', component: StudentView, props: true },
+            { path: '/', component: Main, props: true },
             { path: '/' + GLOBALS.TEACHER_VIEW_PATH + '/:classroomId', component: TeacherView, props: true },
+            { path: '/' + GLOBALS.ROOM_CREATOR + '/', component: RoomCreator, props: true },
+            { path: '/' + GLOBALS.CLASSES + '/', component: Classroom, name:'classroom', props: true },
         ]
 
         const router = new VueRouter({
@@ -68,7 +80,7 @@ export class VueConfigurer implements IVueConfigurer {
             },
             methods: {
             },
-            // store: this.store,
+            store: this.store,
             router
         } as ComponentOptions<any> /*TODO: should be ComponentOptions<Vue>*/)
     }
@@ -81,4 +93,5 @@ export class VueConfigurerArgs {
     @inject(TYPES.ITeacherViewCreator) public teacherViewCreator: ITeacherViewCreator
     @inject(TYPES.ITopicCreator) public topicCreator: ITopicCreator
     @inject(TYPES.IHeaderCreator) public headerCreator: IHeaderCreator
+    @inject(TYPES.Store) public store: Store<any>
 }

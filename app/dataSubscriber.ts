@@ -17,16 +17,16 @@ export class DataSubscriber implements IDataSubscriber {
         this.store = store
     }
     public start() {
-        this.classroom1QuestionsRef.on('value', snapshot => {
-            const questions: IQuestion[] = snapshot.val()
-            console.log('data received', questions)
-            if (!questions) {
-                return
-            }
-            this.store.commit(MUTATION_NAMES.LOAD_CLASSROOM_1_QUEUE_DATA, questions)
-
-        })
-        console.log("app started")
+        // this.classroom1QuestionsRef.on('value', snapshot => {
+        //     const questions: IQuestion[] = snapshot.val()
+        //     console.log('data received', questions)
+        //     if (!questions) {
+        //         return
+        //     }
+        //     this.store.commit(MUTATION_NAMES.LOAD_CLASSROOM_1_QUEUE_DATA, questions)
+        //
+        // })
+        console.log("dataSubscriber started")
         // this.vueConfigurer.configure()
     }
 }

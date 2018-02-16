@@ -8,7 +8,7 @@ import {TYPES} from "../../../types";
 import {MUTATION_NAMES} from "../../appStore";
 const template = require('./topic.html').default
 import './topic.less'
-import {hasQuestion} from "../classroom/classroomUtils";
+import {hasQuestion} from "../studentClassViewer/classroomUtils";
 
 const DEFAULT_CLASSROOM_ID = '1'
 @injectable()
