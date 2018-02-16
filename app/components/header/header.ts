@@ -25,7 +25,7 @@ export class HeaderCreator implements IHeaderCreator {
             methods: {
                 goToTeacherView() {
                     console.log('goToTeacherView called')
-                    this.$router.push({name: GLOBALS.TEACHER_VIEW_PATH, params: {classroomId: '1'}})
+                    this.$router.push({name: GLOBALS.TEACHER_CLASS_VIEWER, params: {classroomId: '1'}})
                     // this.$router.go()
                 }
             }

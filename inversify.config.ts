@@ -1,8 +1,8 @@
 import {Container, ContainerModule, interfaces} from "inversify";
 import {App, AppArgs} from "./app/app";
 import {
-    IApp, IClassroomCreator, IStudentViewCreator, ITeacherViewCreator, IVueConfigurer, ITopicCreator,
-    IHeaderCreator, IDataSubscriber, IState, ITeacherLoader
+    IApp, IClassroomCreator, IStudentViewCreator, ITeacherClassViewerCreator, IVueConfigurer, ITopicCreator,
+    IHeaderCreator, IDataSubscriber, IState, ITeacherLoader, IClassLoader
 } from "./interfaces";
 import {TYPES} from "./types";
 import {VueConfigurer, VueConfigurerArgs} from "./app/vueConfigurer";
@@ -12,7 +12,7 @@ import {Store} from "vuex";
 import Vuex from 'vuex'
 import Vue from 'vue'
 import {default as AppStore, AppStoreArgs} from "./app/appStore";
-import {TeacherViewCreator, TeacherViewCreatorArgs} from "./app/components/teacherClassViewer/teacherClassViewer";
+import {TeacherClassViewerCreator, TeacherViewCreatorArgs} from "./app/components/teacherClassViewer/teacherClassViewer";
 import {TopicCreator, TopicCreatorArgs} from "./app/components/topic/topic";
 import {HeaderCreator, HeaderCreatorArgs} from "./app/components/header/header";
 import firebaseConfig = require('./app/firebaseConfig.json')
@@ -21,6 +21,7 @@ import Reference = firebase.database.Reference;
 import {TAGS} from "./app/tags";
 import {DataSubscriber, DataSubscriberArgs} from "./app/dataSubscriber";
 import {TeacherLoader, TeacherLoaderArgs} from "./app/loaders/teacherLoader";
+import {ClassLoader, ClassLoaderArgs} from "./app/loaders/classLoader";
 const initialState: IState = require('./app/initialData.json')
 
 firebase.initializeApp(firebaseConfig)
@@ -40,14 +41,16 @@ export const references
         .whenTargetTagged(TAGS.ClassRoom1QuestionsRef, true)
     bind<Reference>(TYPES.FirebaseReference).toConstantValue(usersRef)
         .whenTargetTagged(TAGS.USERS_REF, true)
-
     })
 
-export const loader
+export const loaders
     = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {
     bind<TeacherLoaderArgs>(TYPES.TeacherLoaderArgs).to(TeacherLoaderArgs)
     bind<ITeacherLoader>(TYPES.ITeacherLoader)
         .to(TeacherLoader)
+    bind<ClassLoaderArgs>(TYPES.ClassLoaderArgs).to(ClassLoaderArgs)
+    bind<IClassLoader>(TYPES.IClassLoader)
+        .to(ClassLoader)
 })
 
 export const components
@@ -60,8 +63,8 @@ export const components
         .to(StudentViewCreator)
     bind<StudentViewCreatorArgs>(TYPES.StudentViewCreatorArgs)
         .to(StudentViewCreatorArgs)
-    bind<ITeacherViewCreator>(TYPES.ITeacherViewCreator)
-        .to(TeacherViewCreator)
+    bind<ITeacherClassViewerCreator>(TYPES.ITeacherViewCreator)
+        .to(TeacherClassViewerCreator)
     bind<TeacherViewCreatorArgs>(TYPES.TeacherViewCreatorArgs)
         .to(TeacherViewCreatorArgs)
     bind<ITopicCreator>(TYPES.ITopicCreator)
@@ -98,7 +101,7 @@ export const app
 })
 export function myContainerLoadAllModules() {
     myContainer.load(references)
-    myContainer.load(loader)
+    myContainer.load(loaders)
     myContainer.load(appStoreArgsModule)
     myContainer.load(app)
     myContainer.load(components)

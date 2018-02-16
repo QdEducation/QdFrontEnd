@@ -1,6 +1,6 @@
 import {inject, injectable, tagged} from 'inversify';
 import {
-    IApp, IClassroomCreator, IStudentViewCreator, ITeacherViewCreator, ITopicCreator,
+    IApp, IClassroomCreator, IStudentViewCreator, ITeacherClassViewerCreator, ITopicCreator,
     IVueConfigurer,
     IHeaderCreator,
 } from "../interfaces";
@@ -23,7 +23,7 @@ const BOOTSTRAP_ELEMENT_SELECTOR = '#app'
 export class VueConfigurer implements IVueConfigurer {
     private classroomCreator: IClassroomCreator
     private studentViewCreator: IStudentViewCreator
-    private teacherViewCreator: ITeacherViewCreator
+    private teacherViewCreator: ITeacherClassViewerCreator
     private topicCreator: ITopicCreator
     private headerCreator: IHeaderCreator
     private store: Store<any>
@@ -56,7 +56,7 @@ export class VueConfigurer implements IVueConfigurer {
         // Vue.component('main', Login)
         const routes = [
             { path: '/', component: Main, props: true },
-            { path: '/' + GLOBALS.TEACHER_VIEW_PATH + '/:classroomId', component: TeacherView, props: true },
+            { path: '/' + GLOBALS.TEACHER_CLASS_VIEWER + '/:classroomId', component: TeacherView, props: true },
             { path: '/' + GLOBALS.ROOM_CREATOR + '/', component: RoomCreator, props: true },
             { path: '/' + GLOBALS.CLASSES + '/', component: Classroom, name:'classroom', props: true },
         ]
@@ -90,7 +90,7 @@ export class VueConfigurer implements IVueConfigurer {
 export class VueConfigurerArgs {
     @inject(TYPES.IClassroomCreator) public classroomCreator: IClassroomCreator
     @inject(TYPES.IStudentViewCreator) public studentViewCreator: IStudentViewCreator
-    @inject(TYPES.ITeacherViewCreator) public teacherViewCreator: ITeacherViewCreator
+    @inject(TYPES.ITeacherViewCreator) public teacherViewCreator: ITeacherClassViewerCreator
     @inject(TYPES.ITopicCreator) public topicCreator: ITopicCreator
     @inject(TYPES.IHeaderCreator) public headerCreator: IHeaderCreator
     @inject(TYPES.Store) public store: Store<any>

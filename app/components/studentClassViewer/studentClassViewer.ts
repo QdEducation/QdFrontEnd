@@ -37,11 +37,11 @@ export class ClassroomCreator implements IClassroomCreator {
             watch: {
             },
             computed: {
-                topics() {
-                    const topics: ITopicWithId[] = me.store.getters.topics(this.classroomId)
-                    console.log('topics in topics computed is ', topics)
-                    return topics
-                },
+                // topics() {
+                //     const topics: ITopicWithId[] = me.store.getters.topics(this.classroomId)
+                //     console.log('topics in topics computed is ', topics)
+                //     return topics
+                // },
                 userId() {
                     const userId: id = me.store.getters.userId
                     return userId
@@ -51,15 +51,15 @@ export class ClassroomCreator implements IClassroomCreator {
                 aMethod() {
                     console.log('a method called')
                 },
-                tapTopic(topicId) {
-                    console.log('tap topic called')
-                    const mutationArgs: ToggleUserHasQuestionMutationArgs = {
-                        topicId,
-                        userId: this.userId,
-                        classroomId: this.classroomId,
-                    }
-                    me.store.commit(MUTATION_NAMES.TOGGLE_USER_HAS_QUESTION, mutationArgs)
-                },
+                // tapTopic(topicId) {
+                //     console.log('tap topic called')
+                //     const mutationArgs: ToggleUserHasQuestionMutationArgs = {
+                //         topicId,
+                //         userId: this.userId,
+                //         classroomId: this.classroomId,
+                //     }
+                //     me.store.commit(MUTATION_NAMES.TOGGLE_USER_HAS_QUESTION, mutationArgs)
+                // },
                 iNeedHelp() {
                     console.log('tap topic called')
                     const mutationArgs: ToggleUserNeedsHelpMutationArgs = {

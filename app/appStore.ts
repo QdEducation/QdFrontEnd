@@ -7,7 +7,8 @@ import {
     IHash,
     IQuestion, IState, ITopic, RemoveUserHasQuestionMutationArgs,
     ToggleUserHasQuestionMutationArgs,
-    ITopicWithId, id, ILoadRoomsForTeachersMutationArgs, ITeacherLoader, ToggleUserNeedsHelpMutationArgs,
+    ITopicWithId, id, LoadRoomsForTeachersMutationArgs, ITeacherLoader, ToggleUserNeedsHelpMutationArgs,
+    LoadClassRoomMutationArgs,
 } from "../interfaces";
 import {addQuestion, getQuestionIndex, hasQuestion, removeQuestion} from "./components/studentClassViewer/classroomUtils";
 import {Debugger} from "inspector";
@@ -27,6 +28,7 @@ export enum MUTATION_NAMES {
     TOGGLE_USER_NEEDS_HELP = 'toggleUserNeedsHelp',
     ADD_USER_HAS_QUESTION = 'addUserHasQuestion',
     REMOVE_USER_HAS_QUESTION = 'removeUserHasQuestion',
+    LOAD_CLASSROOM = 'loadClassroom',
     LOAD_CLASSROOM_1_QUEUE_DATA = 'loadClassroom1QueueData',
     LOAD_ROOMS_FOR_TEACHER = 'loadRoomsForTeachers',
     LOGIN_WITH_GOOGLE = 'loginWithGoogle',
@@ -52,13 +54,14 @@ export enum MUTATION_NAMES {
 const getters = {
     topics(state: IState, getters) {
        return (classroomId): ITopicWithId[] => {
-           const klass = state.classes[classroomId]
-           const topicIds = klass.topics
-           const topics: ITopicWithId[] = topicIds.map( getters.topic)
-           console.log("topics in getters are ", topics)
-
-           // TODO: implement
-           return topics
+           return []
+           // const klass = state.classes[classroomId]
+           // const topicIds = klass.topics
+           // const topics: ITopicWithId[] = topicIds.map( getters.topic)
+           // console.log("topics in getters are ", topics)
+           //
+           // // TODO: implement
+           // return topics
        }
     },
     topic(state: IState, getters) {
@@ -76,10 +79,13 @@ const getters = {
     },
     // called by /teacherRoomViewer/:classroomId
     usersWhoNeedHelp(state: IState, getters) {
+        console.log('users who need help called')
         return (classroomId: id): id[] => { // array of student ids. . . . eventually return the whole user object
             // TODO: make sure whatever component is calling this getter also calls the MUTATION to load this room from the DB
             const classroom = state.classes[classroomId]
-            return classroom.queue && Object.keys(classroom.queue) || []
+            const users = classroom.queue && Object.keys(classroom.queue) || []
+            console.log('users who need help is ', users)
+            return users
 
         }
     },
@@ -149,6 +155,9 @@ const mutations = {
         //     mutations[MUTATION_NAMES.ADD_USER_HAS_QUESTION](state, args)
         // }
     },
+    [MUTATION_NAMES.LOAD_CLASSROOM] (state: IState, {classroomId, classroom}: LoadClassRoomMutationArgs) {
+        Vue.set(state.classes, classroomId, classroom)
+    },
     [MUTATION_NAMES.LOAD_CLASSROOM_1_QUEUE_DATA] (state: IState, queue: IQuestion[]) {
         // const classroom = state.classes[1]
         // classroom.queue = queue
@@ -171,7 +180,7 @@ const mutations = {
         });
 
     },
-    [MUTATION_NAMES.LOAD_ROOMS_FOR_TEACHER](state: IState, {teacherId} :ILoadRoomsForTeachersMutationArgs) {
+    [MUTATION_NAMES.LOAD_ROOMS_FOR_TEACHER](state: IState, {teacherId} :LoadRoomsForTeachersMutationArgs) {
 
     }
 }

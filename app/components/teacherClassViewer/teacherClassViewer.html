@@ -1,6 +1,6 @@
 <div class="teacher-view">
     <app-header :title="title" :subtitle="date"></app-header>
-    <div class="teacher-view-question" v-for="question in questions">
+    <div class="teacher-view-question" v-for="userWhoNeedsHelp in usersWhoNeedHelp">
         {{question.studentName}}: {{question.topic}}
     </div>
 </div>

@@ -14,7 +14,7 @@ export interface IStudentViewCreator extends IComponentCreator {
 }
 export interface IClassroomCreator extends IComponentCreator {
 }
-export interface ITeacherViewCreator extends IComponentCreator {
+export interface ITeacherClassViewerCreator extends IComponentCreator {
 }
 export interface ITopicCreator extends IComponentCreator {
 }
@@ -40,7 +40,7 @@ export interface IClass {
     name: string,
     teacher: id,
     queue: IHash<id> // hash map of user ids //<IPerson[],
-    topics: id[],
+    // topics: id[],
 }
 export interface IClassWithId extends IClass {
     id: id
@@ -75,11 +75,18 @@ export interface ToggleUserNeedsHelpMutationArgs {
 export interface RemoveUserHasQuestionMutationArgs {
     classroomId, questionIndex
 }
-export interface ILoadRoomsForTeachersMutationArgs {
+export interface LoadRoomsForTeachersMutationArgs {
     teacherId,
+}
+export interface LoadClassRoomMutationArgs {
+    classroomId: id,
+    classroom: IClass
 }
 
 // loaders
 export interface ITeacherLoader {
     downloadData(teacherId): Promise<ITeacher>
+}
+export interface IClassLoader {
+    downloadData(classId: id): Promise<IClass>
 }

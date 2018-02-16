@@ -1,6 +1,6 @@
 import {inject, injectable} from "inversify";
 import {
-    IFormattedQuestion, IQuestion, ITeacherViewCreator, ITopic, ITopicCreator,
+    IFormattedQuestion, IQuestion, ITeacherClassViewerCreator, ITopic, ITopicCreator,
     ToggleUserHasQuestionMutationArgs
 } from "../../../interfaces";
 import {Store} from "vuex";

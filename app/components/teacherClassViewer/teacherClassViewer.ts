@@ -1,19 +1,26 @@
 import {inject, injectable} from "inversify";
-import {IFormattedQuestion, IQuestion, ITeacherViewCreator} from "../../../interfaces";
+import {
+    IClass, IClassLoader, IFormattedQuestion, IQuestion, ITeacherClassViewerCreator,
+    LoadClassRoomMutationArgs
+} from "../../../interfaces";
 import {Store} from "vuex";
 import {TYPES} from "../../../types";
 const template = require('./teacherClassViewer.html').default
 import './teacherClassViewer.less'
 import {GLOBALS} from "../../globals";
+import {MUTATION_NAMES} from "../../appStore";
 
 const DEFAULT_CLASSROOM_ID = '1'
 @injectable()
-export class TeacherViewCreator implements ITeacherViewCreator {
+export class TeacherClassViewerCreator implements ITeacherClassViewerCreator {
     private store: Store<any>
+    private classLoader: IClassLoader
     constructor(@inject(TYPES.TeacherViewCreatorArgs){
-       store
+        store,
+        classLoader
    }: TeacherViewCreatorArgs ) {
         this.store = store
+        this.classLoader = classLoader
     }
     public create() {
         const me = this
@@ -24,9 +31,17 @@ export class TeacherViewCreator implements ITeacherViewCreator {
             async created() {
                 console.log('teacher view created')
             },
-            mounted() {
-                console.log('teacher view mounted')
-                // this.$store.commit()
+            async mounted() {
+                // load data via loaders, and upon that data receive call a store mutation to essentially store in store whatever users need help
+                console.log('teacher view mounted', this.classroomId)
+                const classroom: IClass = await me.classLoader.downloadData(this.classroomId)
+                const mutationArgs: LoadClassRoomMutationArgs = {
+                    classroomId: this.classroomId,
+                    classroom
+                }
+                this.$store.commit(MUTATION_NAMES.LOAD_CLASSROOM, mutationArgs)
+
+                // TODO: add syncing . . . so that whenever a new user gets added to the classroom queue, it gets added to store and then piped in to the teacherClassViewer via getters
             },
             data() {
                 return {
@@ -37,13 +52,16 @@ export class TeacherViewCreator implements ITeacherViewCreator {
             watch: {
             },
             computed: {
-                questions() {
-                    const questionsUnformatted: IQuestion[] = me.store.getters.questions(this.classroomId)
-                    console.log('questions Unformatted in questions computed is ', questionsUnformatted)
-                    const questionsFormatted: IFormattedQuestion[] = formatQuestions({store: me.store, questions: questionsUnformatted})
-                    console.log('questions formatted in questions computed is ', questionsFormatted)
-                    return questionsFormatted
-                }
+                usersWhoNeedHelp() {
+                    return this.$store.getters.usersWhoNeedHelp(this.classroomId)
+                },
+                // questions() {
+                //     const questionsUnformatted: IQuestion[] = me.store.getters.questions(this.classroomId)
+                //     console.log('questions Unformatted in questions computed is ', questionsUnformatted)
+                //     const questionsFormatted: IFormattedQuestion[] = formatQuestions({store: me.store, questions: questionsUnformatted})
+                //     console.log('questions formatted in questions computed is ', questionsFormatted)
+                //     return questionsFormatted
+                // }
             },
         }
         return component
@@ -63,4 +81,5 @@ function formatQuestions({store, questions}: {store: Store<any>, questions: IQue
 @injectable()
 export class TeacherViewCreatorArgs {
     @inject(TYPES.Store) public store: Store<any>
+    @inject(TYPES.IClassLoader) public classLoader: IClassLoader
 }

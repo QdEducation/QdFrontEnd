@@ -22,7 +22,7 @@ module.exports = {
                 {
                     enforce: 'pre',
                     test: /\.tsx?$/,
-                    loader: 'tslint-loader',
+                    loader: 'tslint-loaders',
                     exclude: /(node_modules)/,
                 },
                 {
@@ -31,46 +31,46 @@ module.exports = {
                 },
                 {
                     test: /\.js$/,
-                    loader: 'babel-loader',
+                    loader: 'babel-loaders',
                     exclude: /node_modules/
                 },
                 // {
                 //     test: /\.json$/,
-                //     loader: 'babel-loader',
+                //     loaders: 'babel-loaders',
                 //     exclude: /node_modules/
                 // },
                 {
                     test: /\.vue$/,
-                    loader: 'vue-loader',
+                    loader: 'vue-loaders',
                     options: {
                         loaders: {
-                            // Since sass-loader (weirdly) has SCSS as its default parse mode, we sourceMap
+                            // Since sass-loaders (weirdly) has SCSS as its default parse mode, we sourceMap
                             // the "scss" and "sass" values for the lang attribute to the right configs here.
-                            // other preprocessors should work out of the box, no loader config like this necessary.
-                            'scss': 'vue-style-loader!css-loader!sass-loader',
-                            'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
-                        }          // other vue-loader options go here
+                            // other preprocessors should work out of the box, no loaders config like this necessary.
+                            'scss': 'vue-style-loaders!css-loaders!sass-loaders',
+                            'sass': 'vue-style-loaders!css-loaders!sass-loaders?indentedSyntax'
+                        }          // other vue-loaders options go here
                     }
                 },
                 {
                     test: /\.less$/,
-                    loader: "style-loader!css-loader!less-loader"
+                    loader: "style-loaders!css-loaders!less-loaders"
                 },
                 {
                     test: /\.html$/,
-                    loader: 'html-loader?exportAsEs6Default',
+                    loader: 'html-loaders?exportAsEs6Default',
                     exclude: /node_modules/
                 },
                 {
                     test: /\.(png|jpg|gif|svg)$/,
-                    loader: 'file-loader',
+                    loader: 'file-loaders',
                     options: {
                         name: '[name].[ext]?[hash]'
                     }
                 },
                 {
                     test: /\.css$/,
-                    loader: 'css-loader',
+                    loader: 'css-loaders',
                     options: {
                         name: '[name].[ext]?[hash]'
                     }
