@@ -1,6 +1,6 @@
 import {inject, injectable} from "inversify";
 import {
-    IClassroomCreator, id, IQuestion, ITopic, ITopicWithId,
+    IStudentClassViewerCreator, id, IQuestion, ITopic, ITopicWithId,
     ToggleUserHasQuestionMutationArgs, ToggleUserNeedsHelpMutationArgs
 } from "../../../interfaces";
 import {Store} from "vuex";
@@ -11,11 +11,11 @@ import './studentClassViewer.less'
 import {GLOBALS} from "../../globals";
 
 @injectable()
-export class ClassroomCreator implements IClassroomCreator {
+export class StudentClassViewerCreator implements IStudentClassViewerCreator {
     private store: Store<any>
-    constructor(@inject(TYPES.ClassroomCreatorArgs){
+    constructor(@inject(TYPES.StudentClassViewerCreatorArgs){
         store
-    }: ClassroomCreatorArgs ) {
+    }: StudentClassViewerCreatorArgs ) {
         this.store = store
     }
     public create() {
@@ -24,7 +24,7 @@ export class ClassroomCreator implements IClassroomCreator {
             props: ['classroomId'],
             template,
             async created() {
-                console.log('teacher view created')
+                console.log('teacherId view created')
             },
             mounted() {
             },
@@ -75,6 +75,6 @@ export class ClassroomCreator implements IClassroomCreator {
     }
 }
 @injectable()
-export class ClassroomCreatorArgs {
+export class StudentClassViewerCreatorArgs {
     @inject(TYPES.Store) public store: Store<any>
 }

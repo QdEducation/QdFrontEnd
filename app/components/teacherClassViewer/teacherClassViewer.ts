@@ -1,6 +1,6 @@
 import {inject, injectable} from "inversify";
 import {
-    IClass, IClassLoader, IFormattedQuestion, IQuestion, ITeacherClassViewerCreator,
+    IClass, IClassroomLoader, IFormattedQuestion, IQuestion, ITeacherClassViewerCreator,
     LoadClassRoomMutationArgs
 } from "../../../interfaces";
 import {Store} from "vuex";
@@ -14,7 +14,7 @@ const DEFAULT_CLASSROOM_ID = '1'
 @injectable()
 export class TeacherClassViewerCreator implements ITeacherClassViewerCreator {
     private store: Store<any>
-    private classLoader: IClassLoader
+    private classLoader: IClassroomLoader
     constructor(@inject(TYPES.TeacherViewCreatorArgs){
         store,
         classLoader
@@ -29,11 +29,11 @@ export class TeacherClassViewerCreator implements ITeacherClassViewerCreator {
             props: ['classroomId'],
             template,
             async created() {
-                console.log('teacher view created')
+                console.log('teacherId view created')
             },
             async mounted() {
                 // load data via loaders, and upon that data receive call a store mutation to essentially store in store whatever users need help
-                console.log('teacher view mounted', this.classroomId)
+                console.log('teacherId view mounted', this.classroomId)
                 const classroom: IClass = await me.classLoader.downloadData(this.classroomId)
                 const mutationArgs: LoadClassRoomMutationArgs = {
                     classroomId: this.classroomId,
@@ -81,5 +81,5 @@ function formatQuestions({store, questions}: {store: Store<any>, questions: IQue
 @injectable()
 export class TeacherViewCreatorArgs {
     @inject(TYPES.Store) public store: Store<any>
-    @inject(TYPES.IClassLoader) public classLoader: IClassLoader
+    @inject(TYPES.IClassLoader) public classLoader: IClassroomLoader
 }

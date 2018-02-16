@@ -8,7 +8,7 @@ import {
     IQuestion, IState, ITopic, RemoveUserHasQuestionMutationArgs,
     ToggleUserHasQuestionMutationArgs,
     ITopicWithId, id, LoadRoomsForTeachersMutationArgs, ITeacherLoader, ToggleUserNeedsHelpMutationArgs,
-    LoadClassRoomMutationArgs,
+    LoadClassRoomMutationArgs, ITeacher, CreateClassroomMutationArgs,
 } from "../interfaces";
 import {addQuestion, getQuestionIndex, hasQuestion, removeQuestion} from "./components/studentClassViewer/classroomUtils";
 import {Debugger} from "inspector";
@@ -31,6 +31,7 @@ export enum MUTATION_NAMES {
     LOAD_CLASSROOM = 'loadClassroom',
     LOAD_CLASSROOM_1_QUEUE_DATA = 'loadClassroom1QueueData',
     LOAD_ROOMS_FOR_TEACHER = 'loadRoomsForTeachers',
+    CREATE_CLASSROOM = 'createClassroom',
     LOGIN_WITH_GOOGLE = 'loginWithGoogle',
     // toggleUserHasQuestion = 'toggleUserHasQuestion' // ({classroomId, userId, topicId}){
 
@@ -87,6 +88,19 @@ const getters = {
             console.log('users who need help is ', users)
             return users
 
+        }
+    },
+    classroomIdsByTeacher(state: IState, getters) {
+        return (teacherId: id): id[] => { // return list of classroomIds
+            const teacher: ITeacher = state.teachers[teacherId]
+            const classes = Object.keys(teacher.classes)
+            return Object.keys(teacher.classes)
+        }
+    },
+    classroom(state: IState, getters) {
+        return (classroomId: id) => {
+            const klass = state.classes[classroomId]
+            return klass
         }
     },
     // questions(state: IState, getters) {
@@ -180,9 +194,18 @@ const mutations = {
         });
 
     },
-    [MUTATION_NAMES.LOAD_ROOMS_FOR_TEACHER](state: IState, {teacherId} :LoadRoomsForTeachersMutationArgs) {
+    [MUTATION_NAMES.CREATE_CLASSROOM](state: IState, {classroomId, clasroomName, teacherId}: CreateClassroomMutationArgs) {
+        const classroom: IClass = {
+            name: clasroomName,
+            teacherId,
+            queue: {}
+        }
+        Vue.set(state.classes, classroom)
 
     }
+    // [MUTATION_NAMES.LOAD_ROOMS_FOR_TEACHER](state: IState, {teacherId} :LoadRoomsForTeachersMutationArgs) {
+    //
+    // }
 }
 mutations[MUTATION_NAMES.REMOVE_USER_HAS_QUESTION] = function (state: IState, {classroomId, questionIndex} : RemoveUserHasQuestionMutationArgs) {
     const classes: IHash<IClass> = state.classes

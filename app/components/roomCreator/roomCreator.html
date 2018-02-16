@@ -1,7 +1,11 @@
 <div class="roomCreator">
-    <div><b>Your rooms</b></div>
+    <div><b>{{teacherId}}'s rooms</b></div>
     <div class="rooms">
-        <room v-for="room in rooms" :room-data="room"></room>
+        <div v-for="roomId in roomIds">Room id: {{roomId}}</div>
+        <!--<room v-for="classroomId in rooms" :room-data="room"></room>-->
+        <div>
+            Create new room: <input type="text" ref="newRoomName" v-ok:keyup.enter="createRoom(newRoomName)" ><button v-on:click="createRoom(newRoomName)">Create</button>
+        </div>
 
     </div>
 </div>

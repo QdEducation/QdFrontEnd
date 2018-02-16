@@ -1,12 +1,12 @@
 import {Container, ContainerModule, interfaces} from "inversify";
 import {App, AppArgs} from "./app/app";
 import {
-    IApp, IClassroomCreator, IStudentViewCreator, ITeacherClassViewerCreator, IVueConfigurer, ITopicCreator,
-    IHeaderCreator, IDataSubscriber, IState, ITeacherLoader, IClassLoader
+    IApp, IStudentClassViewerCreator, IStudentViewCreator, ITeacherClassViewerCreator, IVueConfigurer, ITopicCreator,
+    IHeaderCreator, IDataSubscriber, IState, ITeacherLoader, IClassroomLoader, IClassroomCreatorCreator
 } from "./interfaces";
 import {TYPES} from "./types";
 import {VueConfigurer, VueConfigurerArgs} from "./app/vueConfigurer";
-import {ClassroomCreator, ClassroomCreatorArgs} from "./app/components/studentClassViewer/studentClassViewer";
+import {StudentClassViewerCreator, StudentClassViewerCreatorArgs} from "./app/components/studentClassViewer/studentClassViewer";
 import {StudentViewCreator, StudentViewCreatorArgs} from "./app/components/studentView/studentView";
 import {Store} from "vuex";
 import Vuex from 'vuex'
@@ -22,6 +22,7 @@ import {TAGS} from "./app/tags";
 import {DataSubscriber, DataSubscriberArgs} from "./app/dataSubscriber";
 import {TeacherLoader, TeacherLoaderArgs} from "./app/loaders/teacherLoader";
 import {ClassLoader, ClassLoaderArgs} from "./app/loaders/classLoader";
+import {ClassroomCreatorCreator, RoomCreatorCreatorArgs} from "./app/components/roomCreator/roomCreator";
 const initialState: IState = require('./app/initialData.json')
 
 firebase.initializeApp(firebaseConfig)
@@ -49,16 +50,16 @@ export const loaders
     bind<ITeacherLoader>(TYPES.ITeacherLoader)
         .to(TeacherLoader)
     bind<ClassLoaderArgs>(TYPES.ClassLoaderArgs).to(ClassLoaderArgs)
-    bind<IClassLoader>(TYPES.IClassLoader)
+    bind<IClassroomLoader>(TYPES.IClassLoader)
         .to(ClassLoader)
 })
 
 export const components
     = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {
-    bind<IClassroomCreator>(TYPES.IClassroomCreator)
-        .to(ClassroomCreator)
-    bind<ClassroomCreatorArgs>(TYPES.ClassroomCreatorArgs)
-        .to(ClassroomCreatorArgs)
+    bind<IStudentClassViewerCreator>(TYPES.IClassroomCreator)
+        .to(StudentClassViewerCreator)
+    bind<StudentClassViewerCreatorArgs>(TYPES.StudentClassViewerCreatorArgs)
+        .to(StudentClassViewerCreatorArgs)
     bind<IStudentViewCreator>(TYPES.IStudentViewCreator)
         .to(StudentViewCreator)
     bind<StudentViewCreatorArgs>(TYPES.StudentViewCreatorArgs)
@@ -75,6 +76,10 @@ export const components
         .to(HeaderCreator)
     bind<HeaderCreatorArgs>(TYPES.HeaderCreatorArgs)
         .to(HeaderCreatorArgs)
+    bind<IClassroomCreatorCreator>(TYPES.IClassroomCreatorCreator)
+        .to(ClassroomCreatorCreator)
+    bind<RoomCreatorCreatorArgs>(TYPES.RoomCreatorCreatorArgs)
+        .to(RoomCreatorCreatorArgs)
 })
 export const app
     = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {

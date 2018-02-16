@@ -13,7 +13,7 @@ test('getQuestionIndex valid', t => {
     // const index0student: id = studentA
     // const index1topic: id = topic1
     // const index1student: id = studentB
-    // const teacher: id = '23324'
+    // const teacherId: id = '23324'
     // const topics: id[] = [topic0, topic1, topic2]
     // const questionToSearchFor: IQuestion = {
     //     topic: index1topic, student: index1student
@@ -23,7 +23,7 @@ test('getQuestionIndex valid', t => {
     //     questionToSearchFor
     // ]
     // const aClass: IClass = {
-    //     teacher,
+    //     teacherId,
     //     topics,
     //     queue
     // }
@@ -49,7 +49,7 @@ test('getQuestionIndex valid', t => {
     // const index0student: id = studentA
     // const index1topic: id = topic1
     // const index1student: id = studentB
-    // const teacher: id = '23324'
+    // const teacherId: id = '23324'
     // const topics: id[] = [topic0, topic1, topic2]
     // const questionToSearchFor: IQuestion = {
     //     topic: index1topic, student: index1student
@@ -62,7 +62,7 @@ test('getQuestionIndex valid', t => {
     //     questionToSearchFor
     // ]
     // const aClass: IClass = {
-    //     teacher,
+    //     teacherId,
     //     topics,
     //     queue
     // }
@@ -88,7 +88,7 @@ test('addQuestion', t => {
     // const index0student: id = studentA
     // const index1topic: id = topic1
     // const index1student: id = studentB
-    // const teacher: id = '23324'
+    // const teacherId: id = '23324'
     // const topics: id[] = [topic0, topic1, topic2]
     // const questionToAdd: IQuestion = {
     //     topic: index1topic, student: index1student
@@ -101,7 +101,7 @@ test('addQuestion', t => {
     //     questionToAdd
     // ]
     // const aClass: IClass = {
-    //     teacher,
+    //     teacherId,
     //     topics,
     //     queue
     // }
@@ -127,7 +127,7 @@ test('removeQuestion', t => {
     // const index0student: id = studentA
     // const index1topic: id = topic1
     // const index1student: id = studentB
-    // const teacher: id = '23324'
+    // const teacherId: id = '23324'
     // const topics: id[] = [topic0, topic1, topic2]
     // const questionToRemove: IQuestion = {
     //     topic: index1topic, student: index1student
@@ -140,7 +140,7 @@ test('removeQuestion', t => {
     //     questionToRemove
     // ]
     // const aClass: IClass = {
-    //     teacher,
+    //     teacherId,
     //     topics,
     //     queue
     // }

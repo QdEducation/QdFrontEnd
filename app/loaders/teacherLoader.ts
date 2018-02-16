@@ -16,7 +16,7 @@ export class TeacherLoader implements ITeacherLoader {
         return new Promise((resolve, reject) => {
             this.firebaseRef.once('value', snapshot => {
                 const teacher: ITeacher = snapshot.val()
-                console.log('teacher with id of ' + teacherId + 'just downloaded')
+                console.log('teacherId with id of ' + teacherId + 'just downloaded')
                 if (!isValidTeacher(teacher)){
                 }
                 resolve(teacher)

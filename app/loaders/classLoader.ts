@@ -1,11 +1,11 @@
-import {IClass, IClassLoader, ITeacher, ITeacherLoader} from "../../interfaces";
+import {IClass, IClassroomLoader, ITeacher, ITeacherLoader} from "../../interfaces";
 import {inject, injectable, tagged} from "inversify";
 import Reference = firebase.database.Reference;
 import {TYPES} from "../../types";
 import {TAGS} from "../tags";
 
 @injectable()
-export class ClassLoader implements IClassLoader {
+export class ClassLoader implements IClassroomLoader {
     private firebaseRef: Reference
     constructor(@inject(TYPES.ClassLoaderArgs){firebaseRef}: ClassLoaderArgs) {
         this.firebaseRef = firebaseRef
@@ -16,7 +16,7 @@ export class ClassLoader implements IClassLoader {
             this.firebaseRef.once('value', snapshot => {
                 const klass: IClass = snapshot.val()
                 console.log('class with id of ' + classId + 'just downloaded. it is ' + klass)
-                // if (!isValidTeacher(teacher)){
+                // if (!isValidTeacher(teacherId)){
                 // }
                 resolve(klass)
             })
