@@ -1,4 +1,4 @@
-import './roomCreator.less'
+import './classroomCreator.less'
 import {MUTATION_NAMES} from "../../appStore";
 import {
     IClass, id, ITeacher, ITeacherLoader, IClassroomLoader,
@@ -16,7 +16,7 @@ if (env === 'test') {
     register(['.html'])
 }
 // tslint:disable-next-line no-var-requires
-const template = require('./roomCreator.html').default || require('./roomCreator.html')
+const template = require('./classroomCreator.html').default || require('./classroomCreator.html')
 const md5 = require('md5').default || require('md5')
 
 
@@ -35,7 +35,7 @@ export class ClassroomCreatorCreator implements IClassroomCreatorCreator {
     public create()
     {
         const me = this
-        console.log('teacherViewCreator create just called')
+        console.log('teacherClassViewerCreator create just called')
         const component =
         {
             template, // '<div> {{movie}} this is the tree template</div>',
@@ -43,7 +43,7 @@ export class ClassroomCreatorCreator implements IClassroomCreatorCreator {
             async created() {
                 // this.$store.commit(MUTATION_NAMES.LOAD_ROOMS_FOR_TEACHER, {teacherId: this.$store.getters.userId})
 
-                console.log('roomCreator created with teacherId id of', this.teacherId)
+                console.log('studentClassViewer created with teacherId id of', this.teacherId)
                 // const teacherId: id = this.$store.getters.userId
                 const teacherId: id = this.teacherId
                 const teacher: ITeacher = await me.teacherLoader.downloadData(teacherId)
@@ -60,9 +60,9 @@ export class ClassroomCreatorCreator implements IClassroomCreatorCreator {
                     console.log('classWithId is', classWithId)
                     return classWithId
                 })
-                console.log('classPromises downloaded in roomCreator are', classPromises)
+                console.log('classPromises downloaded in studentClassViewer are', classPromises)
                 const classes: IClassWithId[] = await Promise.all(classPromises)
-                console.log('classes downloaded in roomCreator are', classes)
+                console.log('classes downloaded in studentClassViewer are', classes)
                 classes.forEach((klass: IClassWithId) => {
                     const mutationArgs: LoadClassRoomMutationArgs = {
                         classroomId: klass.id,

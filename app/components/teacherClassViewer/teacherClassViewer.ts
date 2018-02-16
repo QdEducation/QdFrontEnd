@@ -24,7 +24,7 @@ export class TeacherClassViewerCreator implements ITeacherClassViewerCreator {
     }
     public create() {
         const me = this
-        console.log('teacherViewCreator create just called')
+        console.log('teacherClassViewerCreator create just called')
         const component = {
             props: ['classroomId'],
             template,

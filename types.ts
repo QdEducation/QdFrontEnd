@@ -14,7 +14,7 @@ export const TYPES = {
     IClassroomCreatorCreator: Symbol('IClassroomCreatorCreator'),
     IStudentViewCreator: Symbol('IStudentViewCreator'),
     IState: Symbol('IState'),
-    ITeacherViewCreator: Symbol('ITeacherClassViewerCreator'),
+    ITeacherClassViewerCreator: Symbol('ITeacherClassViewerCreator'),
     ITeacherLoader: Symbol('ITeacherLoader'),
     ITopicCreator: Symbol('ITopicCreator'),
     IVueConfigurer: Symbol('IVueConfigurer'),

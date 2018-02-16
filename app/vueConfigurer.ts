@@ -11,7 +11,7 @@ import {GLOBALS} from "./globals";
 import {Store} from "vuex";
 import Login from './components/login/login'
 import Main from './components/main/main'
-import {ClassroomCreatorCreator} from './components/roomCreator/roomCreator'
+import {ClassroomCreatorCreator} from './components/classroomCreator/classroomCreator'
 
 let VueRouter = require('vue-router').default;
 if (!VueRouter) {
@@ -26,20 +26,20 @@ export class VueConfigurer implements IVueConfigurer {
     private teacherViewCreator: ITeacherClassViewerCreator
     private topicCreator: ITopicCreator
     private headerCreator: IHeaderCreator
-    private roomCreatorCreator: IClassroomCreatorCreator
+    private classroomCreatorCreator: IClassroomCreatorCreator
     private store: Store<any>
     constructor(@inject(TYPES.VueConfigurerArgs){
-        studentViewCreator, classroomCreator,
-        teacherViewCreator, topicCreator, headerCreator,
-        roomCreatorCreator,
+        studentViewCreator, studentClassViewer,
+        teacherClassViewerCreator, topicCreator, headerCreator,
+        classroomCreatorCreator,
         store,
     }: VueConfigurerArgs ) {
-        this.classroomCreator = classroomCreator
+        this.classroomCreator = studentClassViewer
         this.studentViewCreator = studentViewCreator
-        this.teacherViewCreator = teacherViewCreator
+        this.teacherViewCreator = teacherClassViewerCreator
         this.topicCreator = topicCreator
         this.headerCreator = headerCreator
-        this.roomCreatorCreator = roomCreatorCreator
+        this.classroomCreatorCreator = classroomCreatorCreator
         this.store = store
     }
     public configure() {
@@ -50,7 +50,7 @@ export class VueConfigurer implements IVueConfigurer {
         const TeacherView = this.teacherViewCreator.create()
         const Topic = this.topicCreator.create()
         const Header = this.headerCreator.create()
-        const RoomCreator = this.roomCreatorCreator.create()
+        const ClassroomCreator = this.classroomCreatorCreator.create()
 
         Vue.component('classroom', Classroom)
         Vue.component('topic', Topic)
@@ -61,8 +61,9 @@ export class VueConfigurer implements IVueConfigurer {
         const routes = [
             { path: '/', component: Main, props: true },
             { path: '/' + GLOBALS.TEACHER_CLASSROOM_VIEWER + '/:classroomId', component: TeacherView, props: true },
-            { path: '/' + GLOBALS.CLASSROOM_CREATOR + '/', component: RoomCreator, props: true },
+            { path: '/' + GLOBALS.CLASSROOM_CREATOR + '/:teacherId', component: ClassroomCreator, props: true },
             { path: '/' + GLOBALS.CLASSROOMS + '/', component: Classroom, name:'classroom', props: true },
+            { path: '/' + 'samplePath' + '/', component: Login, name:'samplePath', props: true },
         ]
 
         const router = new VueRouter({
@@ -92,11 +93,11 @@ export class VueConfigurer implements IVueConfigurer {
 
 @injectable()
 export class VueConfigurerArgs {
-    @inject(TYPES.IClassroomCreator) public classroomCreator: IStudentClassViewerCreator
+    @inject(TYPES.IStudentViewCreator) public studentClassViewer: IStudentClassViewerCreator
     @inject(TYPES.IStudentViewCreator) public studentViewCreator: IStudentViewCreator
-    @inject(TYPES.ITeacherViewCreator) public teacherViewCreator: ITeacherClassViewerCreator
+    @inject(TYPES.ITeacherClassViewerCreator) public teacherClassViewerCreator: ITeacherClassViewerCreator
     @inject(TYPES.ITopicCreator) public topicCreator: ITopicCreator
     @inject(TYPES.IHeaderCreator) public headerCreator: IHeaderCreator
-    @inject(TYPES.IClassroomCreatorCreator) public roomCreatorCreator: IClassroomCreatorCreator
+    @inject(TYPES.IClassroomCreatorCreator) public classroomCreatorCreator: IClassroomCreatorCreator
     @inject(TYPES.Store) public store: Store<any>
 }

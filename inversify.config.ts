@@ -22,7 +22,7 @@ import {TAGS} from "./app/tags";
 import {DataSubscriber, DataSubscriberArgs} from "./app/dataSubscriber";
 import {TeacherLoader, TeacherLoaderArgs} from "./app/loaders/teacherLoader";
 import {ClassLoader, ClassLoaderArgs} from "./app/loaders/classLoader";
-import {ClassroomCreatorCreator, RoomCreatorCreatorArgs} from "./app/components/roomCreator/roomCreator";
+import {ClassroomCreatorCreator, RoomCreatorCreatorArgs} from "./app/components/classroomCreator/classroomCreator";
 const initialState: IState = require('./app/initialData.json')
 
 firebase.initializeApp(firebaseConfig)
@@ -64,7 +64,7 @@ export const components
         .to(StudentViewCreator)
     bind<StudentViewCreatorArgs>(TYPES.StudentViewCreatorArgs)
         .to(StudentViewCreatorArgs)
-    bind<ITeacherClassViewerCreator>(TYPES.ITeacherViewCreator)
+    bind<ITeacherClassViewerCreator>(TYPES.ITeacherClassViewerCreator)
         .to(TeacherClassViewerCreator)
     bind<TeacherViewCreatorArgs>(TYPES.TeacherViewCreatorArgs)
         .to(TeacherViewCreatorArgs)

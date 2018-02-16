@@ -3,6 +3,6 @@ export const GLOBALS = {
     date: 'Wednesday 2/14',
     TEACHER_CLASSROOM_VIEWER: 'teacherClassViewer',
     STUDENT_CLASS_VIEWER: 'studentClassViewer',
-    CLASSROOM_CREATOR: 'roomCreator',
+    CLASSROOM_CREATOR: 'studentClassViewer',
     CLASSROOMS: 'classes'
 }
